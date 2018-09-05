@@ -43,11 +43,11 @@ const { bithumbCrawler, coinoneCrawler, upbitCrawler, gopaxCrawler, bitfinexCraw
 // const BitfinexCrawler = new bitfinexCrawler();
 // BitfinexCrawler.getQuotes();
 
-// const HuobiCrawler = new huobiCrawler();
-// HuobiCrawler.getQuotes();
+const HuobiCrawler = new huobiCrawler();
+HuobiCrawler.getQuotes();
 
 // const PoloniexCrawler = new poloniexCrawler();
 // PoloniexCrawler.getQuotes();
 
-const BinanceCrawler = new binanceCrawler();
-BinanceCrawler.getQuotes();
+// const BinanceCrawler = new binanceCrawler();
+// BinanceCrawler.getQuotes();

@@ -63,8 +63,8 @@ HuobiWS.prototype.getQuotes = function() {
 
     huobiConfig.crawl_list.forEach(coin => {
       const subscribe = JSON.stringify({
-        sub : `market.${coin.toLowerCase()}.depth.step3`,
-        id  : "faoiewjfoiawhgiuehuf"
+        sub : `market.${coin.toLowerCase()}.depth.step0`,
+        id  : `${coin.toLowerCase()}`
       });
 
       wsclient.socket.send(subscribe);
@@ -83,6 +83,7 @@ HuobiWS.prototype.getQuotes = function() {
       }));
     }
     else if(parseJson.tick) {
+      console.time("tick");
       const currency = parseJson.ch.split('.')[1];
 
       const RedisAskHashTable = `${self.Market}_${currency.toUpperCase()}_ASK`;
@@ -97,7 +98,8 @@ HuobiWS.prototype.getQuotes = function() {
       parseJson.tick.bids.forEach(element => {
         self.redisClient.hset(RedisBidHashTable,element[0],element[1]);
       });
-      
+      console.timeEnd("tick");
+
     }
 
   });

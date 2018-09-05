@@ -1,0 +1,34 @@
+{
+  "name": "abc_crawler",
+  "version": "1.0.0",
+  "description": "crypto currency price crawler",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tes-minchan/abc_crawler.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tes-minchan/abc_crawler/issues"
+  },
+  "homepage": "https://github.com/tes-minchan/abc_crawler#readme",
+  "dependencies": {
+    "async": "^2.6.1",
+    "axios": "^0.18.0",
+    "bluebird": "^3.5.1",
+    "lodash": "^4.17.10",
+    "mysql": "^2.16.0",
+    "pako": "^1.0.6",
+    "redis": "^2.8.0",
+    "sleep": "^5.2.3",
+    "ws-reconnect": "^1.0.5"
+  },
+  "scripts": {
+    "test": "NODE_PATH=src node src/worker/observer",
+    "start": "pm2 start deploy.config.json",
+    "crawler": "NODE_PATH=src node src/worker/crawler",
+    "observer:allPrice": "NODE_PATH=src node src/worker/observer/allPrices",
+    "observer:arbInfo": "NODE_PATH=src node src/worker/observer/arbInfo"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "apps": [
+    {
+      "name": "crawler",
+      "script": "./src/worker/crawler",
+      "env": {
+        "NODE_PATH": "src"
+      },
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm::ss.SSS Z"
+    },
+    {
+      "name": "observer",
+      "script": "./src/worker/observer",
+      "env": {
+        "NODE_PATH": "src"
+      },
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm::ss.SSS Z"
+    }
+  ]
+}

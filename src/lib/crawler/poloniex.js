@@ -14,11 +14,6 @@
  *   *====*====*===*====*====*====*====*====*====*====*====*====*====*====*====*
 */
 
-/*
-* redis table에 저장시 sorted set으로 저장해야 하는데 score가 소수점이라 정확한 값이 score에 저장되지 않음.
-* 해당 score를 정수화 해서 저장 후 추출 시 소수점해야할듯.
-*/
-
 
 // npm modules.
 const wsClient = require('ws-reconnect');
@@ -86,8 +81,6 @@ PoloniexWS.prototype.getQuotes = function() {
   wsclient.on("message",function(message){
     const parseJson = JSON.parse(message.toString());
 
-
-
     if(parseJson[0] === 1010) {
       // Hearbeat
       console.log(parseJson);
@@ -114,34 +107,30 @@ PoloniexWS.prototype.getQuotes = function() {
 
         }
         else if(element[0] === 'o') {
-          
+          const [type, price, volume] = [element[1], element[2], element[3]];
+
           // hearBeat timestamp.
           self.heartBeatTimestamp = new Date().getTime();
           
           // Update orderbook.
-          orderbook.forEach(element => {
-            const [type, price, volume] = [element[1], element[2], element[3]];
-
-            if(type === 0){
-              // ASK orderbook update
-              if(Number(volume) == 0) {
-                self.redisClient.hdel(RedisAskHashTable, price);
-              }
-              else {
-                self.redisClient.hset(RedisAskHashTable, price, volume);
-              }
+          if(type === 0){
+            // ASK orderbook update
+            if(Number(volume) == 0) {
+              self.redisClient.hdel(RedisAskHashTable, price);
             }
             else {
-              // BID orderbook update
-              if(Number(volume) == 0) {
-                self.redisClient.hdel(RedisBidHashTable, price);
-              }
-              else {
-                self.redisClient.hset(RedisBidHashTable, price, volume);
-              }
+              self.redisClient.hset(RedisAskHashTable, price, volume);
             }
-
-          });
+          }
+          else {
+            // BID orderbook update
+            if(Number(volume) == 0) {
+              self.redisClient.hdel(RedisBidHashTable, price);
+            }
+            else {
+              self.redisClient.hset(RedisBidHashTable, price, volume);
+            }
+          }
 
         }
       });

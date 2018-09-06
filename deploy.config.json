@@ -2,7 +2,7 @@
   "apps": [
     {
       "name": "crawler:korea",
-      "script": "./src/worker/crawler/korea",
+      "script": "./src/worker/crawler/korea.js",
       "env": {
         "NODE_PATH": "src"
       },
@@ -11,7 +11,7 @@
     },
     {
       "name": "crawler:abroad",
-      "script": "./src/worker/crawler/abroad",
+      "script": "./src/worker/crawler/abroad.js",
       "env": {
         "NODE_PATH": "src"
       },

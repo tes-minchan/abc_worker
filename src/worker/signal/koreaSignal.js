@@ -42,7 +42,11 @@ koreaSignal.prototype.sendSlack = function(data) {
           if(parseInt(element.profitPercentage) !== config.koreaSignalSubs[coin].sendedPercentage) {
 
             if(parseInt(element.profitPercentage) > config.koreaSignalSubs[coin].sendedPercentage) {
-              this.SlackBot.sendMessage(element);
+              const toSendData = {
+                coin : coin,
+                data : element
+              }
+              this.SlackBot.sendMessage(toSendData);
               config.koreaSignalSubs[coin].sendedPercentage = parseInt(element.profitPercentage);
             }
             else {

@@ -1,27 +1,13 @@
-const Joi = require('joi');
+const slackBots = require('slackbots');
+const config = {
+  token : "xoxb-219103622912-429987589571-hwmdrbHV470vEqOjRha9S0N0",
+  name  : "abc-signal",
+  channel : "t1-10_abc-signal"
+}
 
-const obj = { ask: '1667',
-askVol: '2212.215',
-bid: '1641',
-bidVol: '8.5997',
-market: 'BITHUMB' }
 
-const schema = Joi.object().keys({
-  ask : Joi.required(),
-  askVol : Joi.required(),
-  bid : Joi.required(),
-  bidVol : Joi.required(),
-  market : Joi.required(),
+const bot = new slackBots({
+  token: config.token, 
+  name: config.name
 });
-
-const validateKey = Joi.validate(obj, schema);
-
-if(validateKey.error) {
-  console.log(1, validateKey.error);
-}
-else {
-  console.log(2, validateKey);
-
-}
-
-
+bot.postMessageToChannel(config.channel, "test", this.params);

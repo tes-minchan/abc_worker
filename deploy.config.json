@@ -1,13 +1,20 @@
 {
   "apps": [
     {
-      "name": "crawler",
-      "script": "./src/worker/crawler",
+      "name": "crawler:korea",
+      "script": "./src/worker/crawler/korea",
       "env": {
         "NODE_PATH": "src"
       },
-      "instances": 2,
-      "exec_mode": "cluster",
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm::ss.SSS Z"
+    },
+    {
+      "name": "crawler:abroad",
+      "script": "./src/worker/crawler/abroad",
+      "env": {
+        "NODE_PATH": "src"
+      },
       "merge_logs": true,
       "log_date_format": "YYYY-MM-DD HH:mm::ss.SSS Z"
     },
@@ -17,8 +24,15 @@
       "env": {
         "NODE_PATH": "src"
       },
-      "instances": 2,
-      "exec_mode": "cluster",
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm::ss.SSS Z"
+    },
+    {
+      "name": "signalToSlack",
+      "script": "./src/worker/signal",
+      "env": {
+        "NODE_PATH": "src"
+      },
       "merge_logs": true,
       "log_date_format": "YYYY-MM-DD HH:mm::ss.SSS Z"
     }

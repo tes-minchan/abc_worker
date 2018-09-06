@@ -92,7 +92,7 @@ fileSave.prototype.fileUpdateAllPrice = function(coinInfo, redis_table) {
       }
       else {
         if(index%2 !== 0) {
-          const bidData = await parseBidData(item);
+          const bidData = await util.parseBidData(item);
 
           saveData.market   = redis_table[index][1].split('_')[0];
           saveData.currency = redis_table[index][1].split('_')[1];
@@ -131,7 +131,7 @@ fileSave.prototype.fileUpdateAllPrice = function(coinInfo, redis_table) {
 
         }
         else {
-          const askData = await parseAskData(item);
+          const askData = await util.parseAskData(item);
           saveData.ask    = askData.price;
           saveData.askVol = askData.volume;
         }
@@ -168,7 +168,7 @@ fileSave.prototype.fileUpdateArbInfo = function(coinInfo, redis_table) {
         const type     = redis_table[index][1].split('_')[2];
 
         if(type === 'ASK') {
-          const askData = await parseAskData(item);
+          const askData = await util.parseAskData(item);
 
           if(!saveDataArr[currency]) {
             saveDataArr[currency] = {};
@@ -186,7 +186,7 @@ fileSave.prototype.fileUpdateArbInfo = function(coinInfo, redis_table) {
 
         }
         else if(type === 'BID') {
-          const bidData = await parseBidData(item);
+          const bidData = await util.parseBidData(item);
 
           if(!saveDataArr[currency].maxBidPrice) {
             saveDataArr[currency].maxBidPrice  = bidData.price;
@@ -259,35 +259,6 @@ fileSave.prototype.fileUpdateArbInfo = function(coinInfo, redis_table) {
     resolve();
   });
 
-}
-
-const parseBidData = function(object) {
-  return new Promise((resolve)=> {
-    const bidArr = _.map(object, (volume, price) => {
-      return {
-        price : Number(price),
-        volume : volume
-      };
-    });
-    const bidSorted = _.sortBy(bidArr, ['price', 'volume']);
-    bidSorted.reverse();
-    resolve(bidSorted[0]);
-
-  });
-}
-
-const parseAskData = function(object) {
-  return new Promise((resolve)=> {
-    const askArr = _.map(object, (volume, price) => {
-      return {
-        price : Number(price),
-        volume : volume
-      };
-    });
-    const askSorted = _.sortBy(askArr, ['price', 'volume']);
-    resolve(askSorted[0]);
-
-  });
 }
 
 module.exports = fileSave;

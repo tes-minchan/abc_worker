@@ -22,13 +22,16 @@
     "mysql": "^2.16.0",
     "pako": "^1.0.6",
     "redis": "^2.8.0",
+    "slackbots": "^1.1.0",
     "sleep": "^5.2.3",
     "ws-reconnect": "^1.0.5"
   },
   "scripts": {
     "test": "NODE_PATH=src node src/worker/observer",
     "start": "pm2 start deploy.config.json",
-    "crawler": "NODE_PATH=src node src/worker/crawler",
-    "observer": "NODE_PATH=src node src/worker/observer"
+    "crawler:korea": "NODE_PATH=src node src/worker/crawler/korea",
+    "crawler:abroad": "NODE_PATH=src node src/worker/crawler/abroad",
+    "observer": "NODE_PATH=src node src/worker/observer",
+    "signal": "NODE_PATH=src node src/worker/signal"
   }
 }

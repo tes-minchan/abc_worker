@@ -8,7 +8,7 @@ const redisClient  = redis.createClient(config.redisConfig);
 let index = 0;
 let price = 0;
 let volume = 0;
-const market = "HUOBI";
+const market = "BINANCE";
 const coin   = "EOSBTC";
 
 function main() {
@@ -46,4 +46,4 @@ function main() {
 
 
 
-setInterval(main, 1000);
+setInterval(main, 100);

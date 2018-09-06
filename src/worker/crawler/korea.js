@@ -1,8 +1,7 @@
 const _ = require('lodash');
 
 const config = require('config').marketConfig;
-const { bithumbCrawler, coinoneCrawler, upbitCrawler, gopaxCrawler, bitfinexCrawler,
-        huobiCrawler, poloniexCrawler, binanceCrawler } = require('lib/crawler');
+const { bithumbCrawler, coinoneCrawler, upbitCrawler, gopaxCrawler } = require('lib/crawler');
 
 /**
  * @description 
@@ -24,10 +23,6 @@ config.gopax.crawl_list.forEach(coin => {
  *   Market which is using websocket.
  *     1. UPBIT
  *     2. COINONE
- *     3. BITFINEX
- *     4. HUOBI
- *     5. POLONIEX
- *     6. BINANCE
  */
 
 const UpbitCrawler = new upbitCrawler();
@@ -39,15 +34,3 @@ config.coinone.crawl_list.forEach(coin => {
   CoinoneCrawler.getQuotes(coin,'KRW');
 });
 CoinoneCrawler.checkHeartBeat();
-
-const BitfinexCrawler = new bitfinexCrawler();
-BitfinexCrawler.getQuotes();
-
-const HuobiCrawler = new huobiCrawler();
-HuobiCrawler.getQuotes();
-
-const PoloniexCrawler = new poloniexCrawler();
-PoloniexCrawler.getQuotes();
-
-const BinanceCrawler = new binanceCrawler();
-BinanceCrawler.getQuotes();

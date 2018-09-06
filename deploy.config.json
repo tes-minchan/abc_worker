@@ -6,6 +6,8 @@
       "env": {
         "NODE_PATH": "src"
       },
+      "instances": 2,
+      "exec_mode": "cluster",
       "merge_logs": true,
       "log_date_format": "YYYY-MM-DD HH:mm::ss.SSS Z"
     },
@@ -15,6 +17,8 @@
       "env": {
         "NODE_PATH": "src"
       },
+      "instances": 2,
+      "exec_mode": "cluster",
       "merge_logs": true,
       "log_date_format": "YYYY-MM-DD HH:mm::ss.SSS Z"
     }

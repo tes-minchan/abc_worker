@@ -8,41 +8,37 @@ const redisClient  = redis.createClient(config.redisConfig);
 let index = 0;
 let price = 0;
 let volume = 0;
+const market = "HUOBI";
+const coin   = "EOSBTC";
 
 function main() {
-  console.log("====================");
-  redisClient.hgetall("HUOBI_BATETH_ASK", function (err, obj) {
-    // console.log(typeof obj);
-    console.time("ASK");
-
+  console.log(`=========${market}-${coin}=========`);
+  redisClient.hgetall(`${market}_${coin}_ASK`, function (err, obj) {
     const askArr = _.map(obj, (volume, price) => {
       return {
-        price : price,
+        price : Number(price),
         volume : volume
       };
     });
     const askSorted = _.sortBy(askArr, ['price', 'volume']);
-    console.timeEnd("ASK");
 
-    console.log(askSorted[0]); // first
-    console.log(askSorted[1]);
+    console.log('ASK',askSorted[0]); // first
+    console.log('ASK',askSorted[1]);
 
   });
 
-  redisClient.hgetall("HUOBI_BATETH_BID", function (err, obj) {
-    console.time("BID");
+  redisClient.hgetall(`${market}_${coin}_BID`, function (err, obj) {
     const askArr = _.map(obj, (volume, price) => {
       return {
-        price : price,
+        price : Number(price),
         volume : volume
       };
     });
     const askSorted = _.sortBy(askArr, ['price', 'volume']);
     askSorted.reverse();
-    console.timeEnd("BID");
 
-    console.log(askSorted[0]); // first
-    console.log(askSorted[1]);
+    console.log('BID',askSorted[0]); // first
+    console.log('BID',askSorted[1]);
 
   });
 
@@ -50,4 +46,4 @@ function main() {
 
 
 
-setInterval(main, 100);
+setInterval(main, 1000);

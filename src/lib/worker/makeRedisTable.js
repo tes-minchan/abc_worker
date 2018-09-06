@@ -7,7 +7,7 @@ function makeRedisTable() {
 
 }
 
-makeRedisTable.prototype.getCoinTable = function() {
+makeRedisTable.prototype.getKoreaCoinTable = function() {
   return new Promise((resolve)=> {
     let redis_table = [];
 
@@ -23,7 +23,21 @@ makeRedisTable.prototype.getCoinTable = function() {
 
 }
 
+makeRedisTable.prototype.getAbroadCoinTable = function() {
+  return new Promise((resolve)=> {
+    let redis_table = [];
 
+    marketConfig.marketListAbroad.forEach(market => {
+      marketConfig[market].crawl_list.forEach(coin => {
+        redis_table.push(['hgetall',`${market.toUpperCase()}_${coin}_ASK`]);
+        redis_table.push(['hgetall',`${market.toUpperCase()}_${coin}_BID`]);
+      })
+    });
+
+    resolve(redis_table)
+  });
+
+}
 
 module.exports = new makeRedisTable();
 

@@ -7,7 +7,7 @@ const observer = function (fileSaver, redisTable) {
   .then(async (res) => {
     if(enableSave) {
       enableSave = false;
-      
+
       await fileSaver.fileUpdateAllPrice(res, redisTable);  
       enableSave = true;
 
@@ -15,6 +15,8 @@ const observer = function (fileSaver, redisTable) {
 
   });
 }
+
+
 
 module.exports = observer;
 

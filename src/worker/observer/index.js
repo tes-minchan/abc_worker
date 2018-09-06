@@ -1,22 +1,37 @@
 const sleep = require('sleep');
+const fs    = require('fs');
 
-const fileSave       = require('./fileSave');
+const { koreaCoin, abroadCoin } = require('./fileSave');
 const makeRedisTable = require('lib/worker/makeRedisTable');
 
-const allPricesDaemon = require('./allPrices');
-const arbInfoDaemon   = require('./arbInfo');
+const allPrices = require('./allPrices');
+const arbInfo   = require('./arbInfo');
 
 
 async function main() {
-  const redisTable = await makeRedisTable.getCoinTable();
-  const allPriceSaver = new fileSave('allPrice');
-  setInterval(allPricesDaemon, 1000, allPriceSaver, redisTable);
+
+  if (!fs.existsSync(`./files`)) {
+    fs.mkdirSync(`./files`);
+    fs.mkdirSync(`./files/korea`);
+    fs.mkdirSync(`./files/abroad`);
+  }
+
+  const redisKoreaTable = await makeRedisTable.getKoreaCoinTable();
+  const allPriceKorea = new koreaCoin('allPrice');
+  setInterval(allPrices, 1000, allPriceKorea, redisKoreaTable);
 
   sleep.sleep(1);
-  const arbInfoSaver  = new fileSave('arbInfo');
-  setInterval(arbInfoDaemon, 1000, arbInfoSaver, redisTable);
+  const arbInfoKorea  = new koreaCoin('arbInfo');
+  setInterval(arbInfo, 1000, arbInfoKorea, redisKoreaTable);
 
+  
+  const redisAbroadTable = await makeRedisTable.getAbroadCoinTable();
+  const allPriceAbroad = new abroadCoin('allPrice');
+  setInterval(allPrices, 1000, allPriceAbroad, redisAbroadTable);
 
+  sleep.sleep(1);
+  const arbInfoAbroad  = new abroadCoin('arbInfo');
+  setInterval(arbInfo, 1000, arbInfoAbroad, redisAbroadTable);
 }
 
 main();

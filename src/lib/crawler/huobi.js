@@ -83,7 +83,6 @@ HuobiWS.prototype.getQuotes = function() {
       }));
     }
     else if(parseJson.tick) {
-      console.time("tick");
       const currency = parseJson.ch.split('.')[1];
 
       const RedisAskHashTable = `${self.Market}_${currency.toUpperCase()}_ASK`;
@@ -98,7 +97,6 @@ HuobiWS.prototype.getQuotes = function() {
       parseJson.tick.bids.forEach(element => {
         self.redisClient.hset(RedisBidHashTable,element[0],element[1]);
       });
-      console.timeEnd("tick");
 
     }
 

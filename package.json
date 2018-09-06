@@ -17,6 +17,7 @@
     "async": "^2.6.1",
     "axios": "^0.18.0",
     "bluebird": "^3.5.1",
+    "joi": "^13.6.0",
     "lodash": "^4.17.10",
     "mysql": "^2.16.0",
     "pako": "^1.0.6",
@@ -28,7 +29,6 @@
     "test": "NODE_PATH=src node src/worker/observer",
     "start": "pm2 start deploy.config.json",
     "crawler": "NODE_PATH=src node src/worker/crawler",
-    "observer:allPrice": "NODE_PATH=src node src/worker/observer/allPrices",
-    "observer:arbInfo": "NODE_PATH=src node src/worker/observer/arbInfo"
+    "observer": "NODE_PATH=src node src/worker/observer"
   }
 }

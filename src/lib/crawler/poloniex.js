@@ -63,7 +63,7 @@ PoloniexWS.prototype.getQuotes = function() {
   wsclient.on("connect", function(connection){
     console.log(`${self.Market} Websocket Client Connected`);
 
-    _.forEach(poloniexConfig.crawl_list, (element, channelID) => {
+    _.forEach(poloniexConfig.coinInfo, (element, channelID) => {
 
       wsclient.socket.send(JSON.stringify({
         command : "subscribe",
@@ -88,8 +88,8 @@ PoloniexWS.prototype.getQuotes = function() {
     else {
       const [code, timestamp, orderbook] = [parseJson[0],parseJson[1],parseJson[2]]
 
-      const RedisAskHashTable = `${self.Market}_${poloniexConfig.crawl_list[code].redisName}_ASK`;          
-      const RedisBidHashTable = `${self.Market}_${poloniexConfig.crawl_list[code].redisName}_BID`;
+      const RedisAskHashTable = `${self.Market}_${poloniexConfig.coinInfo[code].redisName}_ASK`;          
+      const RedisBidHashTable = `${self.Market}_${poloniexConfig.coinInfo[code].redisName}_BID`;
 
       orderbook.forEach(element => {
         if(element[0] === 'i') {

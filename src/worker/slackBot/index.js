@@ -11,21 +11,33 @@ function slackBot () {
     token: config.token, 
     name: config.name
   });
-
-  this.params = {
-    icon_emoji: ':alien:'
-  }
-
-  this.count = 0;
   
 }
 
-slackBot.prototype.sendMessage = function(data) {
-  if(this.count++ < 200) {
-    console.log("send to slack message");
-    console.log(data);
-    this.bot.postMessageToChannel(config.channel, data, this.params);
+slackBot.prototype.sendMessage = function(getData) {
+  const coinName = getData.coin;
+  const data     = getData.data;
+  let slackMsgFormat = {
+    "attachments": [
+        {
+          "icon_emoji": ':alien:',
+        }
+    ]
   }
+  console.log("send to slack message");
+  console.log(coin, data);
+
+  let slackText = `Profit : ₩${Math.floor(data.profit)}, ${data.profitPercentage}%\n`;
+  slackText += `AskMarket : ${data.minAskMarket}\nminAskPrice : ₩${data.minAskPrice}\nminAskVolume : ${data.minAskVolume}\n`;
+  slackText += `BidMarket : ${data.maxBidMarket}\nmaxBidPrice : ₩${data.maxBidPrice}\nmaxBidVolume : ${data.maxBidVolume}\n`;
+  slackText += `tradeVolume : ${data.minimumVolume}\nrequiredFunds : ₩${Math.floor(data.requiredFunds)}\n`
+
+  slackMsgFormat.attachments[0]['title'] = coinName;
+  slackMsgFormat.attachments[0]['text'] = slackText;
+  slackMsgFormat.attachments[0]['ts'] = new Date().getTime() / 1000;
+
+  this.bot.postMessageToChannel(config.channel, '', slackMsgFormat);
+
 }
 
 module.exports = slackBot;

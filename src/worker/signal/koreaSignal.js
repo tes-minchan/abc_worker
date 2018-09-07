@@ -37,7 +37,7 @@ koreaSignal.prototype.sendSlack = function(data) {
       profit : element.profit,
       profitPercentage : element.profitPercentage,
     })
-      .then(res => {
+      .then((res) => {
         if(element.profitPercentage > 1) {
           if(parseInt(element.profitPercentage) !== config.koreaSignalSubs[coin].sendedPercentage) {
 

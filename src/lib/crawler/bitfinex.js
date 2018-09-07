@@ -122,14 +122,27 @@ BitfinexWS.prototype.getQuotes = function() {
       }
       else {
         const [price,count,amount] = [orderbook[0], orderbook[1], orderbook[2]];
+        // when count = 0 then you have to delete the price level.
 
-        // when count > 0 then you have to add or update the price level
-        if(count > 0) {
+        if(!count) {
           /*
-          *  if amount > 0 then add/update bids
-          *  if amount < 0 then add/update asks
+          *  if amount > 0 then remove from bids
+          *  if amount < 0 then remove from asks
           */
           if(amount > 0) {
+            self.redisClient.hdel(REDIS_BID_HNAME, price);
+          }
+          else if(amount < 0) {
+            self.redisClient.hdel(REDIS_ASK_HNAME, price);
+          }
+        }
+        else {
+          // when count > 0 then you have to add or update the price level
+          /*
+          *  if amount >= 0 then add/update bids
+          *  if amount < 0 then add/update asks
+          */
+          if(amount >= 0) {
             self.redisClient.hget(REDIS_BID_HNAME,price,(err, result) => {
               if(result) {
                 self.redisClient.hset(REDIS_BID_HNAME,price,amount);
@@ -149,19 +162,6 @@ BitfinexWS.prototype.getQuotes = function() {
                 self.redisClient.hset(REDIS_ASK_HNAME,price,Math.abs(amount));
               }
             });
-          }
-        }
-        // when count = 0 then you have to delete the price level.
-        else {
-          /*
-          *  if amount = 1 then remove from bids
-          *  if amount = -1 then remove from asks
-          */
-          if(amount == 1) {
-            self.redisClient.hdel(REDIS_BID_HNAME, price);
-          }
-          else {
-            self.redisClient.hdel(REDIS_ASK_HNAME, price);
           }
         }
       }

@@ -25,7 +25,7 @@ slackBot.prototype.sendMessage = function(getData) {
     ]
   }
   console.log("send to slack message");
-  console.log(coin, data);
+  console.log(coinName, data);
 
   let slackText = `Profit : ₩${Math.floor(data.profit)}, ${data.profitPercentage}%\n`;
   slackText += `AskMarket : ${data.minAskMarket}\nminAskPrice : ₩${data.minAskPrice}\nminAskVolume : ${data.minAskVolume}\n`;

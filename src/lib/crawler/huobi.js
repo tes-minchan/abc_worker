@@ -35,7 +35,7 @@ function HuobiWS () {
 
   this.Market       = "HUOBI";
   this.WebsocketURL = "wss://api.huobi.pro/ws";
-  this.redisClient  = redis.createClient(config.redisConfig);
+  this.redisClient  = redis.createClient(config.redisQuotes);
   this.RedisHeartBeatTable = `${this.Market}_HEARTBEAT`;
   this.heartBeatTimestamp  = new Date().getTime();
 }

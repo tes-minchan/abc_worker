@@ -36,7 +36,7 @@ function BinanceWS () {
 
   this.Market       = "BINANCE";
   this.WebsocketURL = "wss://stream.binance.com:9443/stream?streams=";
-  this.redisClient  = redis.createClient(config.redisConfig);
+  this.redisClient  = redis.createClient(config.redisQuotes);
 
   this.RedisHeartBeatTable = `${this.Market}_HEARTBEAT`;
   this.heartBeatTimestamp  = new Date().getTime();
@@ -148,7 +148,7 @@ const redis    = require('redis');
 const config = require('./src/config');
 const _ = require('lodash');
 
-const redisClient  = redis.createClient(config.redisConfig);
+const redisClient  = redis.createClient(config.redisQuotes);
 
 let index = 0;
 let price = 0;

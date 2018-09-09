@@ -34,7 +34,7 @@ function BitfinexWS () {
 
   this.Market        = "BITFINEX";
   this.WebsocketURL  = "wss://api.bitfinex.com/ws/2";
-  this.redisClient   = redis.createClient(config.redisConfig);
+  this.redisClient   = redis.createClient(config.redisQuotes);
   this.RedisHeartBeatTable = `${this.Market}_HEARTBEAT`;
   this.heartBeatTimestamp  = new Date().getTime();
 }
@@ -47,20 +47,23 @@ BitfinexWS.prototype.getQuotes = function() {
 
   // websocket heartBeat func.
   const heartBeat = (ws) => {
+    const heartBeatMsg = JSON.stringify({
+      event : 'ping'
+    });
+    
+    ws.socket.send(heartBeatMsg);
+
     const curr = new Date().getTime();
 
-    if(heartBeatInterval < (curr - this.heartBeatTimestamp)) {
+    if((heartBeatInterval + 10000) < (curr - this.heartBeatTimestamp)) {
       self.redisClient.set(this.RedisHeartBeatTable, false);
     }
     else {
       self.redisClient.set(this.RedisHeartBeatTable, true);
     }
 
-    const heartBeat = JSON.stringify({
-      event : 'ping'
-    });
 
-    ws.socket.send(heartBeat);
+
   }
 
   // websocket client start.

@@ -27,7 +27,7 @@
     "ws-reconnect": "^1.0.5"
   },
   "scripts": {
-    "test": "NODE_PATH=src node src/worker/observer",
+    "test": "NODE_PATH=src node src/worker/aggregator",
     "start": "pm2 start deploy.config.json",
     "crawler:korea": "NODE_PATH=src node src/worker/crawler/korea",
     "crawler:abroad": "NODE_PATH=src node src/worker/crawler/abroad",

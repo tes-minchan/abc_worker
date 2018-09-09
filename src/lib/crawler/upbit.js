@@ -32,7 +32,7 @@ function UpbitWS () {
 
   this.Market       = "UPBIT";
   this.WebsocketURL = "wss://api.upbit.com/websocket/v1";
-  this.redisClient  = redis.createClient(config.redisConfig);
+  this.redisClient  = redis.createClient(config.redisQuotes);
 
 }
 

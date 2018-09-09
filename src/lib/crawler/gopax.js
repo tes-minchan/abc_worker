@@ -33,7 +33,7 @@ function GopaxRESTAPI () {
 GopaxRESTAPI.prototype.getQuotes = function(CURRENCY, timeInterval) {
   console.log(`${this.Market} REST API Start. ${CURRENCY}/KRW`);
 
-  const redisClient = redis.createClient(config.redisConfig);
+  const redisClient = redis.createClient(config.redisQuotes);
   const self = this;
 
   const RedisHeartBeatTable = `${this.Market}_HEARTBEAT`;

@@ -1,6 +1,6 @@
 module.exports = {
   signalConfig : {
-    signalInterval : 100
+    signalInterval : 1000
   },
 
   koreaSignalSubs : {

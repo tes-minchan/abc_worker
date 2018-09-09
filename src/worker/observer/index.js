@@ -12,7 +12,11 @@ async function main() {
 
   if (!fs.existsSync(`./files`)) {
     fs.mkdirSync(`./files`);
+  }
+  if (!fs.existsSync(`./files/korea`)) {
     fs.mkdirSync(`./files/korea`);
+  }
+  if (!fs.existsSync(`./files/abroad`)) {
     fs.mkdirSync(`./files/abroad`);
   }
 

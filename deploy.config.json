@@ -35,6 +35,15 @@
       },
       "merge_logs": true,
       "log_date_format": "YYYY-MM-DD HH:mm::ss.SSS Z"
+    },
+    {
+      "name": "aggregator",
+      "script": "./src/worker/aggregator",
+      "env": {
+        "NODE_PATH": "src"
+      },
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm::ss.SSS Z"
     }
   ]
 }

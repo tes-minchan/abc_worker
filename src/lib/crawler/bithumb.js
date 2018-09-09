@@ -22,7 +22,7 @@ const axios = require('axios');
 
 // custom module or config.
 const config      = require('config');
-const redisClient = redis.createClient(config.redisConfig);
+const redisClient = redis.createClient(config.redisQuotes);
 
 function BithumbRESTAPI () {
 

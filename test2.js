@@ -5,9 +5,28 @@ const config = {
   channel : "t1-10_abc-signal"
 }
 
+const string = `test\nprice : 1123\n volume : 123`;
+
+const slackMsgFormat = {
+  "attachments": [
+      {
+        "title": "QTUM",
+        "icon_emoji": ':alien:',
+      }
+  ]
+}
 
 const bot = new slackBots({
   token: config.token, 
   name: config.name
 });
-bot.postMessageToChannel(config.channel, "test", this.params);
+
+
+slackMsgFormat.attachments[0]['ts'] = new Date().getTime() / 1000;
+
+console.log(slackMsgFormat);
+for(let i = 0; i< 3; i++) {
+  slackMsgFormat.attachments[0]['text'] = `index : ${i}` + string;
+
+  bot.postMessageToChannel(config.channel, i, slackMsgFormat);
+}

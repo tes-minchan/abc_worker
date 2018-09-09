@@ -1,15 +1,10 @@
 const redis    = require('redis');
 const config = require('./src/config');
 const _ = require('lodash');
-const sleep = require('sleep');
 
-const redisClient  = redis.createClient(config.redisConfig);
-
-let index = 0;
-let price = 0;
-let volume = 0;
-const market = "BINANCE";
-const coin   = "EOSBTC";
+const redisClient  = redis.createClient(config.redisQuotes);
+const market = "BITFINEX";
+const coin   = "ETHBTC";
 
 function main() {
   console.log(`=========${market}-${coin}=========`);
@@ -20,10 +15,11 @@ function main() {
         volume : volume
       };
     });
+    console.log(askArr);
     const askSorted = _.sortBy(askArr, ['price', 'volume']);
 
-    console.log('ASK',askSorted[0]); // first
-    console.log('ASK',askSorted[1]);
+    // console.log('ASK',askSorted[0]); // first
+    // console.log('ASK',askSorted[1]);
 
   });
 
@@ -37,13 +33,14 @@ function main() {
     const askSorted = _.sortBy(askArr, ['price', 'volume']);
     askSorted.reverse();
 
-    console.log('BID',askSorted[0]); // first
-    console.log('BID',askSorted[1]);
+    // console.log('BID',askSorted[0]); // first
+    // console.log('BID',askSorted[1]);
 
   });
 
 }
 
 
+main();
 
-setInterval(main, 100);
+// setInterval(main, 100);

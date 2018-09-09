@@ -34,7 +34,7 @@ function CoinoneWS () {
 
   this.Market       = "COINONE";
   this.WebsocketURL = "wss://push.coinone.co.kr/socket.io/?EIO=3&transport=websocket";
-  this.redisClient  = redis.createClient(config.redisConfig);
+  this.redisClient  = redis.createClient(config.redisQuotes);
 
 }
 

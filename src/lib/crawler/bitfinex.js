@@ -62,8 +62,6 @@ BitfinexWS.prototype.getQuotes = function() {
       self.redisClient.set(this.RedisHeartBeatTable, true);
     }
 
-
-
   }
 
   // websocket client start.
@@ -138,6 +136,7 @@ BitfinexWS.prototype.getQuotes = function() {
           else if(amount < 0) {
             self.redisClient.hdel(REDIS_ASK_HNAME, price);
           }
+
         }
         else {
           // when count > 0 then you have to add or update the price level
@@ -146,6 +145,7 @@ BitfinexWS.prototype.getQuotes = function() {
           *  if amount < 0 then add/update asks
           */
           if(amount >= 0) {
+
             self.redisClient.hget(REDIS_BID_HNAME,price,(err, result) => {
               if(result) {
                 self.redisClient.hset(REDIS_BID_HNAME,price,amount);

@@ -1,5 +1,5 @@
 const koreaAggregate = require('./koreaAggregate');
-const setIntervalTime = 1000;
+const setIntervalTime = 300;
 
 const KoreaAggregate = new koreaAggregate();
 

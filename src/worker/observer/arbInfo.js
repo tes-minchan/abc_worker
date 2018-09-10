@@ -1,9 +1,10 @@
 const redisClient    = require('lib/redis');
+const redisConnection = redisClient.getQuotesConn();
 
 const observer = (fileSaver, redisTable) => {
 
   let enableSave = true;
-  redisClient.getMultiTable(redisTable)
+  redisClient.getMultiTable(redisConnection, redisTable)
   .then(async (res) => {
     if(enableSave) {
       enableSave = false;

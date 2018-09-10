@@ -7,13 +7,15 @@ const slackBot = require('worker/slackBot');
 
 function koreaSignal (getRedisTable) {
   this.redisTable = getRedisTable;
+  this.redisConnection = redisClient.getQuotesConn();
+
   this.SlackBot   = new slackBot();
 }
 
 koreaSignal.prototype.getArbSignal = function () {
   return new Promise(async (resolve)=> {
 
-    redisClient.getMultiTable(this.redisTable)
+    redisClient.getMultiTable(this.redisConnection, this.redisTable)
     .then(async (res) => {
 
       resolve(await getArbInfo(res, this.redisTable))  

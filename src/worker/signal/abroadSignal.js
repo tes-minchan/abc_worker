@@ -5,12 +5,15 @@ const redisClient = require('lib/redis');
 
 function abroadSignal (redisAbroadTable) {
   this.redisTable = redisAbroadTable;
+  this.redisConnection = redisClient.getQuotesConn();
+
 }
 
 abroadSignal.prototype.getArbSignal = function () {
+  const self = this;
   return new Promise(async (resolve)=> {
 
-    redisClient.getMultiTable(this.redisTable)
+    redisClient.getMultiTable(self.redisConnection, this.redisTable)
     .then(async (res) => {
 
       resolve(await getArbInfo(res, this.redisTable))  

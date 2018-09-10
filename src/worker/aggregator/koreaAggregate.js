@@ -1,5 +1,3 @@
-const redis = require('redis');
-const config = require('config');
 const _ = require('lodash');
 const redisController = require('lib/redis');
 const makeRedisTable = require('lib/worker/makeRedisTable');
@@ -8,6 +6,8 @@ const makeRedisTable = require('lib/worker/makeRedisTable');
 function koreaAggregator() {
 
   console.log(`Start koreaAggregator !!!`);
+  this.redisQuotesConnection = redisController.getQuotesConn();
+  this.redisAggrConnection = redisController.getAggregateConn();
 
 }
 
@@ -15,9 +15,8 @@ koreaAggregator.prototype.makeAggregateBook = function () {
 
   _getRedisTable()
     .then(async (res) => {
-      const allOrderbook = await redisController.getMultiTable(res);
+      const allOrderbook = await redisController.getMultiTable(this.redisQuotesConnection, res);
       const delOrderbook = [];
-
 
       allOrderbook.forEach((element, index) => {
         const market = res[index][1].split('_')[0];
@@ -28,13 +27,13 @@ koreaAggregator.prototype.makeAggregateBook = function () {
           const redisTableName = `Aggregate_${coin}_${type}`;
 
           if (!delOrderbook.includes(redisTableName)) {
-            redisController.delTable(redisTableName, 1);
+            redisController.delTable(this.redisAggrConnection,redisTableName);
             delOrderbook.push(redisTableName);
           }
 
           _.forEach(element, (volume, price) => {
             const description = `${market}_${volume}`;
-            redisController.setSortedTable(redisTableName, price, description);
+            redisController.setSortedTable(this.redisAggrConnection, redisTableName, price, description);
           });
 
         }
@@ -42,13 +41,13 @@ koreaAggregator.prototype.makeAggregateBook = function () {
           const redisTableName = `Aggregate_${coin}_${type}`;
 
           if (!delOrderbook.includes(redisTableName)) {
-            redisController.delTable(redisTableName, 1);
+            redisController.delTable(this.redisAggrConnection,redisTableName);
             delOrderbook.push(redisTableName);
           }
 
           _.forEach(element, (volume, price) => {
             const description = `${market}_${volume}`;
-            redisController.setSortedTable(redisTableName, price, description);
+            redisController.setSortedTable(this.redisAggrConnection,redisTableName, price, description);
           });
         }
       });

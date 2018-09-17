@@ -21,6 +21,7 @@
 const wsClient = require('ws-reconnect');
 const redis    = require('redis');
 const axios    = require('axios');
+const sleep    = require('sleep');
 
 // custom module or config.
 const config = require('config');
@@ -44,6 +45,7 @@ function BinanceWS () {
   binanceConfig.crawl_list.forEach(async (element) => {
     this.WebsocketURL += `${element.toLowerCase()}@depth/`;
     await orderbookSnapshot(this.Market, element, this.redisClient);
+    sleep.sleep(1);
   });
 
 

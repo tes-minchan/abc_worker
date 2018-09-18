@@ -7,7 +7,7 @@ const schema = require('lib/shema');
 // file save env.
 
 const saveInterval = 240;  // minutes
-const savePath     = '../data/files/abroad';
+const savePath     = '../../data/files/abroad';
 
 function fileSave (type) {
   console.log(type, " start");

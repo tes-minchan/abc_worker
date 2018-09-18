@@ -14,6 +14,8 @@ function fileSave (type) {
   this.startDate = new Date().getTime();
 
   const timestamp = new Date(this.startDate);
+  const fileString = timestamp.toISOString().split('T');
+
   this.fileName = {};
 
   if(type === 'allPrice') {
@@ -26,7 +28,7 @@ function fileSave (type) {
           fs.mkdirSync(`${savePath}/${coin}`);
         }
 
-        this.fileName[coin] = `${timestamp.toISOString()}_${coin}_allPrice.csv`;
+        this.fileName[coin] = `${fileString[0]}T${fileString[1].split(':')[0]}_${coin}_allPrice.csv`;
         fs.writeFile(`${savePath}/${coin}/${this.fileName[coin] }`, this.fileHeader, function(err) {
           if(err) {
             console.log(err);
@@ -49,7 +51,7 @@ function fileSave (type) {
           fs.mkdirSync(`${savePath}/${coin}`);
         }
 
-        this.fileName[coin] = `${timestamp.toISOString()}_${coin}_arbInfo.csv`;
+        this.fileName[coin] = `${fileString[0]}T${fileString[1].split(':')[0]}_${coin}_arbInfo.csv`;
         fs.writeFile(`${savePath}/${coin}/${this.fileName[coin] }`, this.fileHeader, function(err) {
           if(err) {
             console.log(err);

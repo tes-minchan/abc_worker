@@ -10,14 +10,14 @@ const arbInfo   = require('./arbInfo');
 
 async function main() {
 
-  if (!fs.existsSync(`./files`)) {
-    fs.mkdirSync(`./files`);
+  if (!fs.existsSync(`../data/files`)) {
+    fs.mkdirSync(`../data/files`);
   }
-  if (!fs.existsSync(`./files/korea`)) {
-    fs.mkdirSync(`./files/korea`);
+  if (!fs.existsSync(`../data/files/korea`)) {
+    fs.mkdirSync(`../data/files/korea`);
   }
-  if (!fs.existsSync(`./files/abroad`)) {
-    fs.mkdirSync(`./files/abroad`);
+  if (!fs.existsSync(`../data/files/abroad`)) {
+    fs.mkdirSync(`../data/files/abroad`);
   }
 
   const redisKoreaTable = await makeRedisTable.getKoreaCoinTable();

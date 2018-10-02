@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const sleep = require('sleep');
 
 const config = require('config').marketConfig;
 const { bithumbCrawler, coinoneCrawler, upbitCrawler, gopaxCrawler } = require('lib/crawler');
@@ -15,7 +16,8 @@ BithumbCrawler.getQuotes(1000);
 
 const GopaxCrawler = new gopaxCrawler();
 config.gopax.crawl_list.forEach(coin => {
-  GopaxCrawler.getQuotes(coin, 1000);
+  sleep.msleep(300);
+  GopaxCrawler.getQuotes(coin, 1100);
 });
 
 /**
